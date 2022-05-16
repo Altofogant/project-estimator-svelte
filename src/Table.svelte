@@ -18,6 +18,10 @@
         dispatch('edit', {id, name, price});
     }
 
+    function remove(id) {
+        materialStore.remove(id);
+    }
+
     const formatter = new Intl.NumberFormat('de-DE', {
         style: 'currency',
         currency: 'EUR'
@@ -31,11 +35,10 @@
     .total td {
         font-weight: 900;
     }
-    tr {
-        cursor: pointer;
-    }
+
     .item:hover {
         font-weight: 900;
+        cursor: pointer;
     }
 </style>
 
@@ -52,7 +55,7 @@
             <tr class="item" on:click={edit(material.id, material.name, material.price)}>
                 <td>{material.name}</td>
                 <td>{formatter.format(material.price)}</td>
-                <td><i class="far fa-trash-alt"></i></td>
+                <td><i on:click|stopPropagation={remove(material.id)} class="far fa-trash-alt"></i></td>
             </tr>
         {/each}
         <tr class="total">
